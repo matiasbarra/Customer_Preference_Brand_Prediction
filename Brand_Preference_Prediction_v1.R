@@ -1,13 +1,10 @@
 #### Project name:Brand Preference ####
 
-
-
 #### Load packages ####
 install.packages("readr")
 install.packages("caret")
 install.packages("ggplot2", dependencies=TRUE)
 install.packages("caret")
-#install.packages("C50)") ## Not Available for R version 3.6.1
 
 library(readr)
 library(lattice)
@@ -15,7 +12,7 @@ library(ggplot2)
 library(caret)
 library(party)
 library(plyr)
-library(C50) ## Not Available for R version 3.6.1
+library(C50) 
 
 #### Import Data ####
 #read train file
@@ -48,14 +45,13 @@ complete$brand <- factor(complete$brand)
 
 summary(complete)
 
-#### Pre-process ####
 any(is.na(complete))  # confirm if any "NA" values in ds
 any(is.na(incomplete))   # confirm if any "NA" values in ds
 
-#------------------------------------------------Explorative Plots--------#
+#Explorative Plots
 
 ggplot(complete, aes(x=brand, fill=brand)) + geom_bar() + ggtitle("Brand") +
-  geom_text(stat="count",aes(label=..count..,y=..count..), vjust=10) 
+      geom_text(stat="count",aes(label=..count..,y=..count..), vjust=10) 
 
 ggplot(complete, aes(x=salary, fill=brand)) + geom_histogram(color="grey", bins=20) + ggtitle("Brand - Salary")
 
@@ -107,9 +103,8 @@ str(testSet) # 2499 obs of 7 var
 #Train Control | Using "Cross validation" method
 fitControl <- trainControl(method = "repeatedcv", number = 10, repeats = 5)
 
-# Train and test model on train ds
-########---------------------------------------------########
 
+#### Train and test model on train ds#####
 #First I trained the model including all variables -car #
 
 
@@ -133,7 +128,6 @@ KNNfit3<-train(brand~salary, data= trainSet, method="knn", trControl=fitControl,
 KNNfit3 
 #  k   Accuracy   Kappa  
 #  13  0.7081108  0.3737227
-
 
 
 #RF1 with all variables -car
@@ -247,3 +241,10 @@ Pred_Incomp_V1 <-predict(C50fit1, newdata = incomplete)
 summary(Pred_Incomp)
 # acer sony 
 # 1901 3099 
+
+
+
+
+
+
+
